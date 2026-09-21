@@ -144,7 +144,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin: 0 0 18px;
+      margin: 0 0 5px;
       color: #efe2c6;
       font: 700 19px/1.2 Georgia, "Times New Roman", serif;
       text-align: center;
@@ -155,6 +155,12 @@
       height: 1px;
       flex: 1;
       background: rgba(232,220,194,.32);
+    }
+    .potion-tier-subtitle {
+      margin: 0 0 18px;
+      color: #aaa1ad;
+      font: italic 12px/1.35 Arial, sans-serif;
+      text-align: center;
     }
     .potion-slot {
       min-width: 0;
@@ -436,6 +442,7 @@
     <section class="section tab-panel" id="panel-potions" role="tabpanel" aria-labelledby="tab-potions">
       <div class="potion-tier">
         <h2 class="potion-tier-title">Простые зелья</h2>
+        <p class="potion-tier-subtitle">5 постов, 2 задания</p>
         <div class="potions-grid" id="potions-simple">
           <details class="potion-slot" id="fortifying-card">
             <summary>
@@ -561,6 +568,7 @@
       </div>
       <div class="potion-tier">
         <h2 class="potion-tier-title">Средние зелья</h2>
+        <p class="potion-tier-subtitle">8 постов, 3 задания</p>
         <div class="potions-grid" id="potions-medium">
           <details class="potion-slot" id="amortentia-card">
             <summary>
@@ -638,6 +646,7 @@
       </div>
       <div class="potion-tier">
         <h2 class="potion-tier-title">Сложные зелья</h2>
+        <p class="potion-tier-subtitle">13 постов, 5 заданий</p>
         <div class="potions-grid" id="potions-complex">
           <details class="potion-slot" id="polyjuice-card">
             <summary>
