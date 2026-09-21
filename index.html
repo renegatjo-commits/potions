@@ -586,6 +586,54 @@
               <button class="copy-button" type="button">Скопировать код</button>
             </div>
           </details>
+          <details class="potion-slot" id="beauty-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t405818.png" alt="Зелье красоты">
+              <span class="potion-number">9 ✦</span>
+              <span>Зелье красоты</span>
+              <span class="potion-meta">Бронзовый котёл · Шерсть единорога · Лепестки розы · Листья манжетки</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="beauty-code" readonly spellcheck="false" aria-label="Код Зелья красоты"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="invisibility-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t879841.png" alt="Зелье невидимости">
+              <span class="potion-number">9 ✦</span>
+              <span>Зелье невидимости</span>
+              <span class="potion-meta">Оловянный котёл · Шерсть единорога · Шляпка прыгающей поганки · Лапки пауков</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="invisibility-code" readonly spellcheck="false" aria-label="Код Зелья невидимости"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="storm-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t483078.png" alt="Грозовое зелье">
+              <span class="potion-number">9 ✦</span>
+              <span>Грозовое зелье</span>
+              <span class="potion-meta">Бронзовый котёл · Пиявочный сок · Плод смоковницы · Ноготь мертвеца</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="storm-code" readonly spellcheck="false" aria-label="Код Грозового зелья"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="wit-sharpening-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t11042.png" alt="Зелье острого ума">
+              <span class="potion-number">9 ✦</span>
+              <span>Зелье острого ума</span>
+              <span class="potion-meta">Оловянный котёл · Корень имбиря · Толченый скарабей · Желчь броненосца</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="wit-sharpening-code" readonly spellcheck="false" aria-label="Код Зелья острого ума"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
         </div>
       </div>
       <div class="potion-tier">
@@ -651,6 +699,14 @@
     const amortentiaCard = document.getElementById('amortentia-card');
     const awakeningCode = document.getElementById('awakening-code');
     const awakeningCard = document.getElementById('awakening-card');
+    const beautyCode = document.getElementById('beauty-code');
+    const beautyCard = document.getElementById('beauty-card');
+    const invisibilityCode = document.getElementById('invisibility-code');
+    const invisibilityCard = document.getElementById('invisibility-card');
+    const stormCode = document.getElementById('storm-code');
+    const stormCard = document.getElementById('storm-card');
+    const witSharpeningCode = document.getElementById('wit-sharpening-code');
+    const witSharpeningCard = document.getElementById('wit-sharpening-card');
     const polyjuiceCard = document.getElementById('polyjuice-card');
     const tabs = document.querySelector('.tabs');
     const potionPage = document.querySelector('.potion-page');
@@ -668,6 +724,10 @@
     const restorativeCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQstC+0YHRgdGC0LDQvdC+0LLQu9C10L3QuNGPINGB0LjQu1svYl0KW2ldINCX0LXQu9GM0LUg0LLQvtGB0YHRgtCw0L3QvtCy0LvQtdC90LjRjyDRgdC40LsgLSDRhtC10LvQtdCx0L3Ri9C5INC+0YLQstCw0YAsINC/0L7QvNC+0LPQsNGO0YnQuNC5INCy0L7RgdGB0YLQsNC90L7QstC40YLRjNGB0Y8g0L/QvtGB0LvQtSDQsdC+0LvQtdC30L3QtdC5IFsvaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDQwOTIzNi5wbmdbL2ltZ10KW2Jd0J7QsdGL0YfQvdGL0Lkg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCCltiXdCS0LDQu9C10YDQuNCw0L3QsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQvtGC0L4KW2Jd0JvQuNGB0YLRjNGPINGP0YHQtdC90YbQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQvtGC0L5bL2FsaWduXQ==';
     const amortentiaCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JDQvNC+0YDRgtC10L3RhtC40Y5bL2JdCltpXSDQkNC80L7RgNGC0LXQvdGG0LjRjyAtINC+0YfQtdC90Ywg0LzQvtGJ0L3QvtC1INC70Y7QsdC+0LLQvdC+0LUg0LfQtdC70YzQtSBbL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QzMDM0MTgucG5nWy9pbWddCltiXdCc0LXQtNC90YvQuSAg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRggpbYl3Qm9Cw0LLQsNC90LTQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0LHQu9Cw0LPQvtC00LDRgNC90L7RgdGC0YwKW2Jd0JzRkdC0INC40L/QvtC/0LDRgtC+0YfQvdC40LrQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0L/QtdGB0L3RjwpbYl3Qr9Cz0L7QtNGLINC+0LzQtdC70Ys6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINCx0YPRgtGL0LvQvtGH0LrQsFsvYWxpZ25d';
     const awakeningCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQv9GA0L7QsdGD0LbQtNC10L3QuNGPWy9iXQpbaV0g0JfQtdC70YzQtSDQv9GA0L7QsdGD0LbQtNC10L3QuNGPICDigJQg0LfQtdC70YzQtSwg0LrQvtGC0L7RgNC+0LUg0LjRgdC/0L7Qu9GM0LfRg9C10YLRgdGPINC00LvRjyDQvtCx0L7QtNGA0LXQvdC40Y8g0LTRg9GF0LAsIArQsCDRgtCw0LrQttC1INC00LvRjyDQv9GA0L7QsdGD0LbQtNC10L3QuNGPINC/0L7QtNCy0LXRgNCz0L3Rg9GC0YvRhSDQvNCw0LPQuNGH0LXRgdC60L7QvNGDINGB0L3Rgy4gWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90NzUxNjkucG5nWy9pbWddCltiXdCc0LXQtNC90YvQuSAg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRggpbYl3QkNC60L7QvdC40YI6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINC/0L7RgdGCINC+0YIg0LzQsNGB0LrQuApbYl3Ql9C80LXQuNC90YvQtSDQutC70YvQutC4OlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0LTQsNGA0L7QugpbYl3QltCw0LvQviDQstC10YDQtdGC0LXQvdC90LjRhtGLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9GA0LjQt9C90LDQvdC40LVbL2FsaWduXQ==';
+    const beautyCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQutGA0LDRgdC+0YLRi1svYl0KW2ldINCX0LXQu9GM0LUg0LrRgNCw0YHQvtGC0YsgIOKAlCDQt9C10LvRjNC1LCDQutC+0YLQvtGA0L7QtSDQtNC10LvQsNC10YIg0LLRi9C/0LjQstGI0LXQs9C+INC60YDQsNGB0LjQstGL0LwgCtC4INC+0YfQtdC90Ywg0L/RgNC40LLQu9C10LrQsNGC0LXQu9GM0L3Ri9C8LiDQlNC10LnRgdGC0LLRg9C10YIg0LTQsNC20LUg0L3QsCDRgdCw0LzRi9GFINGD0YDQvtC00LvQuNCy0YvRhSDQstC10LTRjNC8LiAgWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90NTg1OTcyLnBuZ1svaW1nXQpbYl3QkdGA0L7QvdC30L7QstGL0LkgINC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIKW2Jd0KjQtdGA0YHRgtGMINC10LTQuNC90L7RgNC+0LPQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0LDQstCw0YLQsNGA0LrQsApbYl3Qm9C10L/QtdGB0YLQutC4INGA0L7Qt9GLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0LTQsNGA0L7QugpbYl3Qm9C40YHRgtGM0Y8g0LzQsNC90LbQtdGC0LrQuDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0LfQsNGP0LLQutCwWy9hbGlnbl0=';
+    const invisibilityCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQvdC10LLQuNC00LjQvNC+0YHRgtC4Wy9iXQpbaV0g0JfQtdC70YzQtSDQvdC10LLQuNC00LjQvNC+0YHRgtC4ICDigJQg0LfQtdC70YzQtSwg0LrQvtGC0L7RgNC+0LUg0L/QvtC30LLQvtC70Y/QtdGCINCy0YDQtdC80LXQvdC90L4g0YHRgtCw0L3QvtCy0LjRgtGM0YHRjyDQvdC10LLQuNC00LjQvNGL0LwuIArQlNC70Y8g0LTQvtGB0YLQuNC20LXQvdC40Y8g0L3QtdC+0LHRhdC+0LTQuNC80L7Qs9C+INGN0YTRhNC10LrRgtCwINC10LPQviDQvdGD0LbQvdC+INC70LjQsdC+INCy0YvQv9C40YLRjCwgCtC70LjQsdC+INC/0YDQvtC70LjRgtGMINC90LAg0YfQtdC70L7QstC10LrQsCwg0LrQvtGC0L7RgNC+0LPQviDRhdC+0YfQtdGC0YHRjyDRgdC60YDRi9GC0YwuICBbL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q4MDQwMDUucG5nWy9pbWddCltiXdCe0LvQvtCy0Y/QvdC90YvQuSAg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRggpbYl3QqNC10YDRgdGC0Ywg0LXQtNC40L3QvtGA0L7Qs9CwOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQsNCy0LDRgtCw0YDQutCwCltiXdCo0LvRj9C/0LrQsCDQv9GA0YvQs9Cw0Y7RidC10Lkg0L/QvtCz0LDQvdC60Lg6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsIDIg0L/QvtGB0YLQsCDRgNCw0LfQvdGL0Lwg0LjQs9GA0L7QutCw0LwKW2Jd0JvQsNC/0LrQuCDQv9Cw0YPQutC+0LI6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINCy0YvRj9GB0L3QuNGC0Ywg0L7RgtC90L7RiNC10L3QuNGPWy9hbGlnbl0=';
+    const stormCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JPRgNC+0LfQvtCy0L7QtSDQt9C10LvRjNC1Wy9iXQpbaV0g0JPRgNC+0LfQvtCy0L7QuSDQvdCw0L/QuNGC0L7QuiAtINGB0L7Qt9C00LDRkdGCINCy0L7QutGA0YPQsyDQstGL0L/QuNCy0YjQtdCz0L4g0LHRg9GA0Y4sIArQutC+0YLQvtGA0LDRjyDQvtCz0LvRg9GI0LDQtdGCINC4INC90LDQvdC+0YHQuNGCINGD0YDQvtC9INCy0YDQsNCz0LDQvCDQv9C+0LHQu9C40LfQvtGB0YLQuC5bL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q1Njk1MjcucG5nWy9pbWddCltiXdCR0YDQvtC90LfQvtCy0YvQuSAg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRggpbYl3Qn9C40Y/QstC+0YfQvdGL0Lkg0YHQvtC6OlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9GA0LjQt9C90LDQvdC40LUg0LIg0LvRjtCx0LLQuApbYl3Qn9C70L7QtCDRgdC80L7QutC+0LLQvdC40YbRizpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0LTQvdC10LLQvdC40LoKW2Jd0J3QvtCz0L7RgtGMINC80LXRgNGC0LLQtdGG0LA6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINC+INC80LXRgNGC0LLQtdGG0LVbL2FsaWduXQ==';
+    const witSharpeningCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQvtGB0YLRgNC+0LPQviDRg9C80LBbL2JdCltpXSDQo9C80L7RgdGC0YDQuNC70YzQvdC+0LUg0LfQtdC70YzQtSDigJQg0Y3RgtC+INGN0LvQuNC60YHQuNGALCDRg9C70YPRh9GI0LDRjtGJ0LjQuSDRgNCw0LHQvtGC0YMg0LPQvtC70L7QstC90L7Qs9C+IArQvNC+0LfQs9CwINCy0L7Qu9GI0LXQsdC90LjQutCwINC40LvQuCDQstC+0LvRiNC10LHQvdC40YbRiywg0L/RgNC+0YnQtSDQs9C+0LLQvtGA0Y8sINC30LDRgtCw0YfQuNCy0LDRjtGJ0LjQuSDRg9C8INGH0LXQu9C+0LLQtdC60LAuWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90MzY2MzY2LnBuZ1svaW1nXQpbYl3QntC70L7QstGP0L3QvdGL0Lkg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRggpbYl3QmtC+0YDQtdC90Ywg0LjQvNCx0LjRgNGPOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C70LXQudC70LjRgdGCCltiXdCi0L7Qu9GH0LXQvdGL0Lkg0YHQutCw0YDQsNCx0LXQuTpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YbQuNGC0LDRgtCwINC00LvRjyDQs9C70LDQstC90L7QuQpbYl3QltC10LvRh9GMINCx0YDQvtC90LXQvdC+0YHRhtCwOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQlNC+0LzQvtCy0L7QuSDRh9Cw0YJbL2FsaWduXQ==';
     const polyjuiceCodeBase64 = 'W3F1b3RlXQpbYWxpZ249Y2VudGVyXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90MjUyMDgxLnBuZ1svaW1nXVsvYWxpZ25dClthbGlnbj1jZW50ZXJdW2Jd0J7QsdC+0YDQvtGC0L3QvtC1INC30LXQu9GM0LVbL2JdWy9hbGlnbl0KW3RhYmxlIGxheW91dD1maXhlZCB3aWR0aD0xMDAlXQpbdHJdClt0ZF1bdXJsPWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy84OTczNzkucG5nXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q4OTczNzkucG5nWy9pbWddWy91cmxdCtCf0L7RgdGCWy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q0NTU5MDEucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQv9C+0YHRggrQu9GO0LHQvtC/0YvRgtC90YvQuSDRhNCw0LrRgiDQv9GA0L4g0LfQvNC10LlbL3RkXQpbdGRdW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDM3OTU5Ny5wbmdbL2ltZ10K0L/QvtGB0YIK0LzQtdC8Wy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q5MDc3ODAucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQsdGD0YLRi9C70L7Rh9C60LBbL3RkXQpbL3RyXQpbL3RhYmxlXVsvcXVvdGVd';
     function decodePotionCode(value) {
       return new TextDecoder().decode(
@@ -686,6 +746,10 @@
     restorativeCode.value = decodePotionCode(restorativeCodeBase64);
     amortentiaCode.value = decodePotionCode(amortentiaCodeBase64);
     awakeningCode.value = decodePotionCode(awakeningCodeBase64);
+    beautyCode.value = decodePotionCode(beautyCodeBase64);
+    invisibilityCode.value = decodePotionCode(invisibilityCodeBase64);
+    stormCode.value = decodePotionCode(stormCodeBase64);
+    witSharpeningCode.value = decodePotionCode(witSharpeningCodeBase64);
     polyjuiceCode.value = decodePotionCode(polyjuiceCodeBase64);
 
     function syncEmbedHeight() {
@@ -738,7 +802,7 @@
     ];
     const mediumPotionNames = [
       'Амортенция', 'Зелье пробуждения', 'Зелье красоты',
-      'Зелье невидимости', 'Грозовой напиток', 'Зелье острого ума'
+      'Зелье невидимости', 'Грозовое зелье', 'Зелье острого ума'
     ];
     const complexPotionNames = [
       'Оборотное зелье', 'Старящее зелье', 'Феликс Фелицис',
@@ -775,6 +839,14 @@
         ? amortentiaCard
         : name === 'Зелье пробуждения'
           ? awakeningCard
+        : name === 'Зелье красоты'
+          ? beautyCard
+        : name === 'Зелье невидимости'
+          ? invisibilityCard
+        : name === 'Грозовое зелье'
+          ? stormCard
+        : name === 'Зелье острого ума'
+          ? witSharpeningCard
         : createNamedPotion(name, '9 ✦'));
     });
     complexPotions.replaceChildren();
