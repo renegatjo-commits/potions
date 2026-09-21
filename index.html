@@ -561,7 +561,32 @@
       </div>
       <div class="potion-tier">
         <h2 class="potion-tier-title">Средние зелья</h2>
-        <div class="potions-grid" id="potions-medium"></div>
+        <div class="potions-grid" id="potions-medium">
+          <details class="potion-slot" id="amortentia-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t237463.png" alt="Амортенция">
+              <span class="potion-number">9 ✦</span>
+              <span>Амортенция</span>
+              <span class="potion-meta">Медный котёл · Лаванда · Мёд ипопаточника · Ягоды омелы</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="amortentia-code" readonly spellcheck="false" aria-label="Код Амортенции"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="awakening-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t603144.png" alt="Зелье пробуждения">
+              <span class="potion-number">9 ✦</span>
+              <span>Зелье пробуждения</span>
+              <span class="potion-meta">Медный котёл · Аконит · Змеиные клыки · Жало веретенницы</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="awakening-code" readonly spellcheck="false" aria-label="Код Зелья пробуждения"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+        </div>
       </div>
       <div class="potion-tier">
         <h2 class="potion-tier-title">Сложные зелья</h2>
@@ -622,6 +647,10 @@
     const forgetfulnessCard = document.getElementById('forgetfulness-card');
     const restorativeCode = document.getElementById('restorative-code');
     const restorativeCard = document.getElementById('restorative-card');
+    const amortentiaCode = document.getElementById('amortentia-code');
+    const amortentiaCard = document.getElementById('amortentia-card');
+    const awakeningCode = document.getElementById('awakening-code');
+    const awakeningCard = document.getElementById('awakening-card');
     const polyjuiceCard = document.getElementById('polyjuice-card');
     const tabs = document.querySelector('.tabs');
     const potionPage = document.querySelector('.potion-page');
@@ -637,6 +666,8 @@
     const antidoteCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0L/RgNC+0YHRgtC+0LUg0L/RgNC+0YLQuNCy0L7Rj9C00LjQtVsvYl0KW2ld0J/RgNC+0YLQuNCy0L7Rj9C00LjQtSDQvtGCINC+0LHRi9GH0L3Ri9GFINGP0LTQvtCyIOKAlCDQt9C10LvRjNC1LCDQutC+0YLQvtGA0L7QtSDQuNC30LvQtdGH0LjQstCw0LXRgiAK0L7RgiDQtNC10LnRgdGC0LLQuNGPINC+0LHRi9GH0L3Ri9GFINGP0LTQvtCyLCDRgtCw0LrQuNGFINC60LDQuiDRg9C60YPRgdGLINGB0YPRidC10YHRgtCyINC4INC20LDQu9CwIArRgtCy0LDRgNC10LksINCwINGC0LDQutC20LUg0L7RgiDRj9C00L7QsiDRgNCw0YHRgtC40YLQtdC70YzQvdC+0LPQviDQv9GA0L7QuNGB0YXQvtC20LTQtdC90LjRj1svaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDUyODEyNi5wbmdbL2ltZ10KW2Jd0J7QsdGL0YfQvdGL0Lkg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCCltiXdCv0LPQvtC00Ysg0L7QvNC10LvRizpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0L/QvtGG0LXQu9GD0LkKW2Jd0JHQtdC30L7QsNGAOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQt9Cw0YnQuNGC0LAKWy9hbGlnbl0=';
     const forgetfulnessCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQsNCx0YvQstGH0LjQstC+0LUg0LfQtdC70YzQtVsvYl0KW2ld0JfQtdC70YzQtSDQt9Cw0LHRi9Cy0YfQuNCy0L7RgdGC0LggIOKAlCDQt9C10LvRjNC1LCDQutC+0YLQvtGA0L7QtSDRgdGC0LjRgNCw0LXRgiDQv9Cw0LzRj9GC0YwuIArQndC10LjQt9Cy0LXRgdGC0L3Qviwg0LTQvtC70LPQvtCy0LXRh9C90L4g0LfQtdC70YzQtSDQuNC70Lgg0LbQtSDQvdC10YIuWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90MTUyMzQ1LnBuZ1svaW1nXQpbYl3QntCx0YvRh9C90YvQuSDQutC+0YLRkdC7OlsvYl0g0L/QvtGB0YIKW2Jd0K/Qs9C+0LTRiyDQvtC80LXQu9GLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0YbQtdC70YPQuSAKW2Jd0JLQsNC70LXRgNC40LDQvdCwOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDRhNC+0YLQviDQv9GA0LjRgNC+0LTRi1svYWxpZ25d';
     const restorativeCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQstC+0YHRgdGC0LDQvdC+0LLQu9C10L3QuNGPINGB0LjQu1svYl0KW2ldINCX0LXQu9GM0LUg0LLQvtGB0YHRgtCw0L3QvtCy0LvQtdC90LjRjyDRgdC40LsgLSDRhtC10LvQtdCx0L3Ri9C5INC+0YLQstCw0YAsINC/0L7QvNC+0LPQsNGO0YnQuNC5INCy0L7RgdGB0YLQsNC90L7QstC40YLRjNGB0Y8g0L/QvtGB0LvQtSDQsdC+0LvQtdC30L3QtdC5IFsvaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDQwOTIzNi5wbmdbL2ltZ10KW2Jd0J7QsdGL0YfQvdGL0Lkg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCCltiXdCS0LDQu9C10YDQuNCw0L3QsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQvtGC0L4KW2Jd0JvQuNGB0YLRjNGPINGP0YHQtdC90YbQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQvtGC0L5bL2FsaWduXQ==';
+    const amortentiaCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JDQvNC+0YDRgtC10L3RhtC40Y5bL2JdCltpXSDQkNC80L7RgNGC0LXQvdGG0LjRjyAtINC+0YfQtdC90Ywg0LzQvtGJ0L3QvtC1INC70Y7QsdC+0LLQvdC+0LUg0LfQtdC70YzQtSBbL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QzMDM0MTgucG5nWy9pbWddCltiXdCc0LXQtNC90YvQuSAg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRggpbYl3Qm9Cw0LLQsNC90LTQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0LHQu9Cw0LPQvtC00LDRgNC90L7RgdGC0YwKW2Jd0JzRkdC0INC40L/QvtC/0LDRgtC+0YfQvdC40LrQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0L/QtdGB0L3RjwpbYl3Qr9Cz0L7QtNGLINC+0LzQtdC70Ys6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINCx0YPRgtGL0LvQvtGH0LrQsFsvYWxpZ25d';
+    const awakeningCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQv9GA0L7QsdGD0LbQtNC10L3QuNGPWy9iXQpbaV0g0JfQtdC70YzQtSDQv9GA0L7QsdGD0LbQtNC10L3QuNGPICDigJQg0LfQtdC70YzQtSwg0LrQvtGC0L7RgNC+0LUg0LjRgdC/0L7Qu9GM0LfRg9C10YLRgdGPINC00LvRjyDQvtCx0L7QtNGA0LXQvdC40Y8g0LTRg9GF0LAsIArQsCDRgtCw0LrQttC1INC00LvRjyDQv9GA0L7QsdGD0LbQtNC10L3QuNGPINC/0L7QtNCy0LXRgNCz0L3Rg9GC0YvRhSDQvNCw0LPQuNGH0LXRgdC60L7QvNGDINGB0L3Rgy4gWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90NzUxNjkucG5nWy9pbWddCltiXdCc0LXQtNC90YvQuSAg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRggpbYl3QkNC60L7QvdC40YI6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINC/0L7RgdGCINC+0YIg0LzQsNGB0LrQuApbYl3Ql9C80LXQuNC90YvQtSDQutC70YvQutC4OlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0LTQsNGA0L7QugpbYl3QltCw0LvQviDQstC10YDQtdGC0LXQvdC90LjRhtGLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9GA0LjQt9C90LDQvdC40LVbL2FsaWduXQ==';
     const polyjuiceCodeBase64 = 'W3F1b3RlXQpbYWxpZ249Y2VudGVyXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90MjUyMDgxLnBuZ1svaW1nXVsvYWxpZ25dClthbGlnbj1jZW50ZXJdW2Jd0J7QsdC+0YDQvtGC0L3QvtC1INC30LXQu9GM0LVbL2JdWy9hbGlnbl0KW3RhYmxlIGxheW91dD1maXhlZCB3aWR0aD0xMDAlXQpbdHJdClt0ZF1bdXJsPWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy84OTczNzkucG5nXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q4OTczNzkucG5nWy9pbWddWy91cmxdCtCf0L7RgdGCWy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q0NTU5MDEucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQv9C+0YHRggrQu9GO0LHQvtC/0YvRgtC90YvQuSDRhNCw0LrRgiDQv9GA0L4g0LfQvNC10LlbL3RkXQpbdGRdW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDM3OTU5Ny5wbmdbL2ltZ10K0L/QvtGB0YIK0LzQtdC8Wy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q5MDc3ODAucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQsdGD0YLRi9C70L7Rh9C60LBbL3RkXQpbL3RyXQpbL3RhYmxlXVsvcXVvdGVd';
     function decodePotionCode(value) {
       return new TextDecoder().decode(
@@ -653,6 +684,8 @@
     antidoteCode.value = decodePotionCode(antidoteCodeBase64);
     forgetfulnessCode.value = decodePotionCode(forgetfulnessCodeBase64);
     restorativeCode.value = decodePotionCode(restorativeCodeBase64);
+    amortentiaCode.value = decodePotionCode(amortentiaCodeBase64);
+    awakeningCode.value = decodePotionCode(awakeningCodeBase64);
     polyjuiceCode.value = decodePotionCode(polyjuiceCodeBase64);
 
     function syncEmbedHeight() {
@@ -737,7 +770,13 @@
           : createNamedPotion(name, '5 ✦'));
     });
     mediumPotions.replaceChildren();
-    mediumPotionNames.forEach((name) => mediumPotions.appendChild(createNamedPotion(name, '9 ✦')));
+    mediumPotionNames.forEach((name) => {
+      mediumPotions.appendChild(name === 'Амортенция'
+        ? amortentiaCard
+        : name === 'Зелье пробуждения'
+          ? awakeningCard
+        : createNamedPotion(name, '9 ✦'));
+    });
     complexPotions.replaceChildren();
     complexPotionNames.forEach((name) => {
       complexPotions.appendChild(name === 'Оборотное зелье'
