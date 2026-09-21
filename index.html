@@ -509,6 +509,54 @@
               <button class="copy-button" type="button">Скопировать код</button>
             </div>
           </details>
+          <details class="potion-slot" id="swelling-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t48207.png" alt="Раздувающий раствор">
+              <span class="potion-number">5 ✦</span>
+              <span>Раздувающий раствор</span>
+              <span class="potion-meta">Обычный котёл · Глаза рыбы-собаки · Сушёная крапива</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="swelling-code" readonly spellcheck="false" aria-label="Код Раздувающего раствора"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="antidote-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t260488.png" alt="Простое противоядие">
+              <span class="potion-number">5 ✦</span>
+              <span>Простое противоядие</span>
+              <span class="potion-meta">Обычный котёл · Ягоды омелы · Безоар</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="antidote-code" readonly spellcheck="false" aria-label="Код Простого противоядия"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="forgetfulness-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t503741.png" alt="Забывчивое зелье">
+              <span class="potion-number">5 ✦</span>
+              <span>Забывчивое зелье</span>
+              <span class="potion-meta">Обычный котёл · Ягоды омелы · Валериана</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="forgetfulness-code" readonly spellcheck="false" aria-label="Код Забывчивого зелья"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="restorative-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t866345.png" alt="Зелье восстановления сил">
+              <span class="potion-number">5 ✦</span>
+              <span>Зелье восстановления сил</span>
+              <span class="potion-meta">Обычный котёл · Валериана · Листья ясенца</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="restorative-code" readonly spellcheck="false" aria-label="Код Зелья восстановления сил"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
         </div>
       </div>
       <div class="potion-tier">
@@ -566,17 +614,29 @@
     const hairGrowthCard = document.getElementById('hair-growth-card');
     const herbicideCode = document.getElementById('herbicide-code');
     const herbicideCard = document.getElementById('herbicide-card');
+    const swellingCode = document.getElementById('swelling-code');
+    const swellingCard = document.getElementById('swelling-card');
+    const antidoteCode = document.getElementById('antidote-code');
+    const antidoteCard = document.getElementById('antidote-card');
+    const forgetfulnessCode = document.getElementById('forgetfulness-code');
+    const forgetfulnessCard = document.getElementById('forgetfulness-card');
+    const restorativeCode = document.getElementById('restorative-code');
+    const restorativeCard = document.getElementById('restorative-card');
     const polyjuiceCard = document.getElementById('polyjuice-card');
     const tabs = document.querySelector('.tabs');
     const potionPage = document.querySelector('.potion-page');
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
     const fortifyingCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0KPQutGA0LXQv9C70Y/RjtGJ0LjQuSDRgNCw0YHRgtCy0L7RgFsvYl0KW2ld0J3QsNC/0LjRgtC+0LosINGB0L/QvtGB0L7QsdGB0YLQstGD0Y7RidC40Lkg0LjRgdGG0LXQu9C10L3QuNGOINC90LXQt9C90LDRh9C40YLQtdC70YzQvdGL0YUg0YDQsNC90LXQvdC40LksIArQutCw0Log0YTQuNC30LjRh9C10YHQutC40YUsINGC0LDQuiDQuCDQv9C+0LvRg9GH0LXQvdC90YvRhSDQv9C+0LQg0LLQvtC30LTQtdC50YHRgtCy0LjQtdC8INC/0YDQvtC60LvRj9GC0LjQuS5bL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QyNjc4ODAucG5nWy9pbWddCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRggpbYl3QmtGA0L7QstGMINGB0LDQu9Cw0LzQsNC90LTRgNGLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0LTQsNGA0L7QuiAKW2Jd0J/QvtGA0L7RiNC+0Log0LjQtyDQutC+0LPRgtGPINCz0YDQuNGE0L7QvdCwOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDRgdGD0L/QtdGALdGB0L/QvtGB0L7QsdC90L7RgdGC0YxbL2FsaWduXQ==';
-    const explodingCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JLQt9GA0YvQstCw0Y7RidC10LUg0LfQtdC70YzQtVsvYl0KW2ld0JfQtdC70YzQtSDQstC30YDRi9Cy0LAgIOKAlCDQutCw0Log0YHQu9C10LTRg9C10YIg0LjQtyDQvdCw0LfQstCw0L3QuNGPLCDQt9C10LvRjNC1LCDRgdC/0L7RgdC+0LHQvdC+0LUg0LLQt9C+0YDQstCw0YLRjNGB0Y8uWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90OTAxMTc0LnBuZ1svaW1nXQpbYl3QntCx0YvRh9C90YvQuSDQutC+0YLRkdC7OlsvYl0gCltiXdCv0LnRhtC+INC/0LXQv9C70L7Qt9C80LXRjzogWy9iXQpbYl3Qn9Cw0YPRh9GM0Lgg0LvQsNC/0LrQuDogWy9iXVsvYWxpZ25d';
+    const explodingCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JLQt9GA0YvQstCw0Y7RidC10LUg0LfQtdC70YzQtVsvYl0KW2ld0JrQsNC6INGB0LvQtdC00YPQtdGCINC40Lcg0L3QsNC30LLQsNC90LjRjywg0LfQtdC70YzQtSwg0YHQv9C+0YHQvtCx0L3QvtC1INCy0LfQvtGA0LLQsNGC0YzRgdGPLlsvaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDkwMTE3NC5wbmdbL2ltZ10KW2Jd0J7QsdGL0YfQvdGL0Lkg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCCltiXdCv0LnRhtC+INC/0LXQv9C70L7Qt9C80LXRjzogWy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINGG0LjRgtCw0YLQsApbYl3Qn9Cw0YPRh9GM0Lgg0LvQsNC/0LrQuDogWy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINCy0YvRj9GB0L3QtdC90LjQtSDQvtGC0L3QvtGI0LXQvdC40LlbL2FsaWduXQ==';
     const pepperupCodeBase64 = 'W2FsaWduPWNlbnRlcl3QktCw0YDRjiBbYl0i0JHQvtC00YDQvtC/0LXRgNGG0L7QstC+0LUg0LfQtdC70YzQtSJbL2JdCltpXdCf0YDQvtGC0LjQstC+0L/RgNC+0YHRgtGD0LTQvdCw0Y8g0LzQuNC60YHRgtGD0YDQsC4g0KDQtdC30LrQviDRgdC+0LPRgNC10LLQsNGO0YnQtdC1INC30LXQu9GM0LUuINCY0LzQtdC10YIgCtC90LXQsdC+0LvRjNGI0L7QtSDQv9C+0LHQvtGH0L3QvtC1INC00LXQudGB0YLQstC40LU6INC40Lcg0L3QvtGB0LAg0Lgg0YPRiNC10Lkg0L/QsNGG0LjQtdC90YLQsCDRh9Cw0YHQsCDRgtGA0Lgg0LjQtNGR0YIg0LvRkdCz0LrQuNC5INC00YvQvC5bL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QxNTg3NDYucG5nWy9pbWddCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRggpbYl3QmtC+0YDQtdC90Ywg0LzQsNC90LTRgNCw0LPQvtGA0Ys6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINC80LXQvApbYl3QmtGA0L7QstGMINGB0LDQu9Cw0LzQsNC90LTRgNGLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0LTQsNGA0L7QulsvYWxpZ25d';
     const maximaCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQnNCw0LrRgdC40LzQsFsvYl0KW2ld0JfQtdC70YzQtSDQnNCw0LrRgdC40LzQsCAtICDQuNGB0L/QvtC70YzQt9GD0LXRgtGB0Y8g0LTQu9GPINGD0LLQtdC70LjRh9C10L3QuNGPINGD0YDQvtC90LAgCtC+0YIg0LfQsNC60LvQuNC90LDQvdC40Lkg0LLRi9C/0LjQstGI0LXQs9C+INC4INC00LXQudGB0YLQstGD0LXRgiDQsiDRgtC10YfQtdC90LjQuCDQvtCz0YDQsNC90LjRh9C10L3QvdC+0LPQviDQstGA0LXQvNC10L3QuC5bL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QzODE4MjQucG5nWy9pbWddCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRggpbYl3QodC+0Log0L/QuNGP0LLQutC4OlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9GA0LjQt9C90LDQvdC40LUg0LIg0LvRjtCx0LLQuApbYl3Qn9C+0YDQvtGI0L7QuiDQuNC3INC60L7Qs9GC0Y8g0LPRgNC40YTQvtC90LA6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINGB0YPQv9C10YAt0YHQv9C+0YHQvtCx0L3QvtGB0YLRjFsvYWxpZ25d';
     const hairGrowthCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDRgNC+0YHRgtCwINCy0L7Qu9C+0YFbL2JdIApbaV3Ql9C10LvRjNC1INC00LvRjyDQsdGL0YHRgtGA0L7Qs9C+INGA0L7RgdGC0LAg0LLQvtC70L7RgVsvaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDQ5MTQ3Mi5wbmdbL2ltZ10gCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRgiAKW2Jd0JrQvtGA0LXQvdGMINC40LzQsdC40YDRjzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0L/QtdGB0L3RjyAKW2Jd0JLQvtC70L7RgSDQsNC30LjQsNGC0YHQutC+0LPQviDQtNGA0LDQutC+0L3QsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQsNC60YJbL2FsaWduXQ==';
     const herbicideCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JPQtdGA0LHQuNGG0LjQtNC90L7QtSDQt9C10LvRjNC1Wy9iXQpbaV3Ql9C10LvRjNC1LCDQutC+0YLQvtGA0L7QtSDRgdC/0L7RgdC+0LHQvdC+INGD0L3QuNGH0YLQvtC20LDRgtGMINC40LvQuCDQv9C+0LLRgNC10LbQtNCw0YLRjCDRgNCw0YHRgtC10L3QuNGPLiAK0JjQvNC10LXRgiDQvtGC0LLRgNCw0YLQuNGC0LXQu9GM0L3Ri9C5INCy0LrRg9GBLCDQvdC10L/RgNC40LPQvtC00L3QviDQtNC70Y8g0YPQv9C+0YLRgNC10LHQu9C10L3QuNGPINGH0LXQu9C+0LLQtdC60L7QvCwgCtGC0LDQuiDQutCw0Log0LzQvtC20LXRgiDRg9GF0YPQtNGI0LjRgtGMINC10LPQviDQt9C00L7RgNC+0LLRjNC1LgpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90NjI2ODUxLnBuZ1svaW1nXQpbYl3QntCx0YvRh9C90YvQuSDQutC+0YLRkdC7OlsvYl0g0L/QvtGB0YIKW2Jd0KHQu9C40LfRjCDRhNC70L7QsdCx0LXRgC3Rh9C10YDQstGPOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQk9C+0LHQu9C40L3RgdC60LjQuSDQtNC+0LwKW2Jd0KHRg9GI0LXQvdCw0Y8g0LrRgNCw0L/QuNCy0LA6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINGG0LjRhNGA0LAgWy9pXVsvYWxpZ25d';
+    const swellingCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0KDQsNC30LTRg9Cy0LDRjtGJ0LjQuSDRgNCw0YHRgtCy0L7RgFsvYl0KW2ldINC30LDRgdGC0LDQstC70Y/QtdGCINC20LjQstGL0LUg0L7QsdGK0LXQutGC0Ysg0YPQstC10LvQuNGH0LjQstCw0YLRjNGB0Y8g0LIg0L7QsdGK0ZHQvNC1LiAK0JLQvtC30LzQvtC20L3QviDRg9Cy0LXQu9C40YfQtdC90LjQtSDRgtC+0LvRjNC60L4g0L3QtdC60L7RgtC+0YDRi9GFINGH0LDRgdGC0LXQuSDRgtC10LvQsC4gWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90NzEzMTUucG5nWy9pbWddCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRggpbYl3Qk9C70LDQt9CwINGA0YvQsdGLLdGB0L7QsdCw0LrQuDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwgINC+INC20LjQstC+0YLQvdGL0YUKW2Jd0KHRg9GI0LXQvdCw0Y8g0LrRgNCw0L/QuNCy0LA6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINGG0LjRhNGA0LBbL2FsaWduXQ==';
+    const antidoteCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0L/RgNC+0YHRgtC+0LUg0L/RgNC+0YLQuNCy0L7Rj9C00LjQtVsvYl0KW2ld0J/RgNC+0YLQuNCy0L7Rj9C00LjQtSDQvtGCINC+0LHRi9GH0L3Ri9GFINGP0LTQvtCyIOKAlCDQt9C10LvRjNC1LCDQutC+0YLQvtGA0L7QtSDQuNC30LvQtdGH0LjQstCw0LXRgiAK0L7RgiDQtNC10LnRgdGC0LLQuNGPINC+0LHRi9GH0L3Ri9GFINGP0LTQvtCyLCDRgtCw0LrQuNGFINC60LDQuiDRg9C60YPRgdGLINGB0YPRidC10YHRgtCyINC4INC20LDQu9CwIArRgtCy0LDRgNC10LksINCwINGC0LDQutC20LUg0L7RgiDRj9C00L7QsiDRgNCw0YHRgtC40YLQtdC70YzQvdC+0LPQviDQv9GA0L7QuNGB0YXQvtC20LTQtdC90LjRj1svaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDUyODEyNi5wbmdbL2ltZ10KW2Jd0J7QsdGL0YfQvdGL0Lkg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCCltiXdCv0LPQvtC00Ysg0L7QvNC10LvRizpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0L/QvtGG0LXQu9GD0LkKW2Jd0JHQtdC30L7QsNGAOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQt9Cw0YnQuNGC0LAKWy9hbGlnbl0=';
+    const forgetfulnessCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQsNCx0YvQstGH0LjQstC+0LUg0LfQtdC70YzQtVsvYl0KW2ld0JfQtdC70YzQtSDQt9Cw0LHRi9Cy0YfQuNCy0L7RgdGC0LggIOKAlCDQt9C10LvRjNC1LCDQutC+0YLQvtGA0L7QtSDRgdGC0LjRgNCw0LXRgiDQv9Cw0LzRj9GC0YwuIArQndC10LjQt9Cy0LXRgdGC0L3Qviwg0LTQvtC70LPQvtCy0LXRh9C90L4g0LfQtdC70YzQtSDQuNC70Lgg0LbQtSDQvdC10YIuWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90MTUyMzQ1LnBuZ1svaW1nXQpbYl3QntCx0YvRh9C90YvQuSDQutC+0YLRkdC7OlsvYl0g0L/QvtGB0YIKW2Jd0K/Qs9C+0LTRiyDQvtC80LXQu9GLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0YbQtdC70YPQuSAKW2Jd0JLQsNC70LXRgNC40LDQvdCwOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDRhNC+0YLQviDQv9GA0LjRgNC+0LTRi1svYWxpZ25d';
+    const restorativeCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQstC+0YHRgdGC0LDQvdC+0LLQu9C10L3QuNGPINGB0LjQu1svYl0KW2ldINCX0LXQu9GM0LUg0LLQvtGB0YHRgtCw0L3QvtCy0LvQtdC90LjRjyDRgdC40LsgLSDRhtC10LvQtdCx0L3Ri9C5INC+0YLQstCw0YAsINC/0L7QvNC+0LPQsNGO0YnQuNC5INCy0L7RgdGB0YLQsNC90L7QstC40YLRjNGB0Y8g0L/QvtGB0LvQtSDQsdC+0LvQtdC30L3QtdC5IFsvaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDQwOTIzNi5wbmdbL2ltZ10KW2Jd0J7QsdGL0YfQvdGL0Lkg0LrQvtGC0ZHQuzpbL2JdINC/0L7RgdGCCltiXdCS0LDQu9C10YDQuNCw0L3QsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQvtGC0L4KW2Jd0JvQuNGB0YLRjNGPINGP0YHQtdC90YbQsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQvtGC0L5bL2FsaWduXQ==';
     const polyjuiceCodeBase64 = 'W3F1b3RlXQpbYWxpZ249Y2VudGVyXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90MjUyMDgxLnBuZ1svaW1nXVsvYWxpZ25dClthbGlnbj1jZW50ZXJdW2Jd0J7QsdC+0YDQvtGC0L3QvtC1INC30LXQu9GM0LVbL2JdWy9hbGlnbl0KW3RhYmxlIGxheW91dD1maXhlZCB3aWR0aD0xMDAlXQpbdHJdClt0ZF1bdXJsPWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy84OTczNzkucG5nXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q4OTczNzkucG5nWy9pbWddWy91cmxdCtCf0L7RgdGCWy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q0NTU5MDEucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQv9C+0YHRggrQu9GO0LHQvtC/0YvRgtC90YvQuSDRhNCw0LrRgiDQv9GA0L4g0LfQvNC10LlbL3RkXQpbdGRdW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDM3OTU5Ny5wbmdbL2ltZ10K0L/QvtGB0YIK0LzQtdC8Wy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q5MDc3ODAucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQsdGD0YLRi9C70L7Rh9C60LBbL3RkXQpbL3RyXQpbL3RhYmxlXVsvcXVvdGVd';
     function decodePotionCode(value) {
       return new TextDecoder().decode(
@@ -589,6 +649,10 @@
     maximaCode.value = decodePotionCode(maximaCodeBase64);
     hairGrowthCode.value = decodePotionCode(hairGrowthCodeBase64);
     herbicideCode.value = decodePotionCode(herbicideCodeBase64);
+    swellingCode.value = decodePotionCode(swellingCodeBase64);
+    antidoteCode.value = decodePotionCode(antidoteCodeBase64);
+    forgetfulnessCode.value = decodePotionCode(forgetfulnessCodeBase64);
+    restorativeCode.value = decodePotionCode(restorativeCodeBase64);
     polyjuiceCode.value = decodePotionCode(polyjuiceCodeBase64);
 
     function syncEmbedHeight() {
@@ -662,6 +726,14 @@
             ? hairGrowthCard
           : name === 'Гербицидное зелье'
             ? herbicideCard
+          : name === 'Раздувающий раствор'
+            ? swellingCard
+          : name === 'Простое противоядие'
+            ? antidoteCard
+          : name === 'Забывчивое зелье'
+            ? forgetfulnessCard
+          : name === 'Зелье восстановления сил'
+            ? restorativeCard
           : createNamedPotion(name, '5 ✦'));
     });
     mediumPotions.replaceChildren();
