@@ -1,0 +1,806 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Практическое зельеварение</title>
+  <style>
+    :root {
+      --plum: #31203f;
+      --violet: #6f4b82;
+      --violet-soft: #9a7aab;
+      --green: #557a61;
+      --green-glow: #9bcf82;
+      --parchment: #eee9dc;
+      --paper: #fbfaf4;
+      --gold: #c7a968;
+      --ink: #2c2830;
+      --muted: #6f6872;
+      --line: rgba(79, 57, 92, .24);
+      --shadow: 0 24px 70px rgba(10, 6, 15, .48);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: transparent;
+      font: 16px/1.55 Georgia, "Times New Roman", serif;
+      position: relative;
+    }
+
+    body::before, body::after { content: none; }
+
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .potion-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto;
+      padding: clamp(22px, 5vw, 60px);
+      border: 1px solid rgba(175, 211, 135, .38);
+      border-radius: 28px;
+      background: #35233f;
+      box-shadow: none;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+      backdrop-filter: blur(7px);
+    }
+
+    .potion-page::before,
+    .potion-page::after {
+      content: none;
+    }
+    .potion-page::before { top: 16px; left: 22px; }
+    .potion-page::after { right: 22px; bottom: 16px; transform: rotate(30deg); }
+
+    .hero { text-align: center; position: relative; z-index: 1; }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--violet);
+      font: 700 12px/1.2 Arial, sans-serif;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 { color: var(--plum); }
+    .hero h1, .section-title h2 { color: #f0e7d3; text-shadow: 0 2px 12px rgba(0,0,0,.6); }
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 6vw, 62px);
+      line-height: 1.05;
+      font-weight: 500;
+    }
+    .hero-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 22px auto 0;
+      color: var(--green);
+    }
+    .hero-rule::before,
+    .hero-rule::after {
+      content: "";
+      width: min(120px, 22vw);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green));
+    }
+    .hero-rule::after { transform: scaleX(-1); }
+
+    .tabs {
+      position: relative;
+      z-index: 20;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+      gap: 10px;
+      margin: 0 auto;
+      padding: 9px;
+      border: 0;
+      border-radius: 18px;
+      background: rgba(30,19,36,.56);
+      box-shadow: inset 0 1px rgba(255,255,255,.06);
+    }
+    .tab-button {
+      min-height: 48px;
+      padding: 12px 14px;
+      border: 0;
+      border-radius: 12px;
+      color: #3f3029;
+      background: #dfcfaa;
+      font: 700 14px/1.2 Georgia, "Times New Roman", serif;
+      cursor: pointer;
+      box-shadow: none;
+      transform: none;
+      transition: color .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .tab-button:hover {
+      color: #251b27;
+      background: #eadcba;
+    }
+    .tab-button[aria-selected="true"] {
+      color: #fff8e8;
+      background: #654676;
+      box-shadow: none;
+      transform: none;
+    }
+    .tab-panel[hidden] { display: none; }
+
+    .section { margin-top: 24px; position: relative; z-index: 1; }
+    .section-title { text-align: center; margin-bottom: 24px; }
+    .section-title h2 { margin: 0; font-size: clamp(27px, 4vw, 40px); font-weight: 500; }
+    .section-title p { margin: 5px 0 0; color: #bdc7ad; font-style: italic; }
+
+    .potions-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      padding-top: 28px;
+    }
+    .potion-tier + .potion-tier { margin-top: 36px; }
+    .potion-tier-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 18px;
+      color: #efe2c6;
+      font: 700 19px/1.2 Georgia, "Times New Roman", serif;
+      text-align: center;
+    }
+    .potion-tier-title::before,
+    .potion-tier-title::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: rgba(232,220,194,.32);
+    }
+    .potion-slot {
+      min-width: 0;
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #e8dcc2;
+      overflow: visible;
+      box-shadow: 0 8px 20px rgba(43,32,66,.07);
+    }
+    .potion-slot[open] { grid-column: span 3; }
+    .potion-slot summary {
+      min-height: 238px;
+      padding: 0 14px 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 9px;
+      cursor: pointer;
+      list-style: none;
+      text-align: center;
+      color: var(--plum);
+      font-weight: 700;
+    }
+    .potion-slot summary::-webkit-details-marker { display: none; }
+    .potion-slot summary img {
+      width: 158px;
+      height: 158px;
+      margin-top: -30px;
+      margin-bottom: -3px;
+      object-fit: contain;
+    }
+    .potion-number {
+      color: var(--gold);
+      font: 700 11px/1 Arial, sans-serif;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .potion-meta {
+      max-width: 100%;
+      color: #817b82;
+      font: italic 11px/1.35 Arial, sans-serif;
+      text-align: center;
+    }
+    .potion-slot.empty { background: linear-gradient(145deg, #eee3ca, #ddcfb2); }
+    .potion-slot.empty summary { color: var(--violet-soft); }
+    .empty-potion-content {
+      min-height: 238px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      text-align: center;
+    }
+    .empty-mark { font-size: 44px; line-height: 1; color: rgba(100,84,133,.25); }
+    .code-panel { padding: 16px; border-top: 1px solid var(--line); background: var(--parchment); }
+    .code-panel textarea {
+      width: 100%;
+      min-height: 310px;
+      resize: vertical;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: #352d40;
+      background: #fff;
+      font: 13px/1.5 Consolas, "Courier New", monospace;
+      white-space: pre;
+      overflow: auto;
+    }
+    .copy-button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 12px;
+      color: #fff;
+      background: linear-gradient(135deg, var(--plum), var(--violet) 58%, var(--green));
+      font: 700 14px/1 Arial, sans-serif;
+      cursor: pointer;
+    }
+    .copy-button:hover { filter: brightness(1.08); }
+
+    .potion-card {
+      display: grid;
+      grid-template-columns: minmax(220px, .85fr) 1.5fr;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(135deg, #fff, var(--parchment));
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(43,32,66,.09);
+    }
+    .potion-visual {
+      min-height: 330px;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.18) 0 2px, transparent 3px) 0 0/22px 22px,
+        linear-gradient(145deg, var(--plum), var(--violet));
+    }
+    .potion-visual img {
+      max-height: 290px;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 18px rgba(0,0,0,.28));
+      transition: transform .25s ease;
+    }
+    .potion-visual a:hover img { transform: translateY(-5px) rotate(-1deg); }
+    .potion-content { padding: clamp(24px, 5vw, 48px); align-self: center; }
+    .potion-content h3 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 38px); font-weight: 500; }
+    .potion-content p { margin: 0 0 24px; color: var(--muted); }
+
+    .mini-tasks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .mini-task {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.72);
+    }
+    .mini-task strong { display: block; color: var(--violet); margin-bottom: 4px; }
+
+    .cauldrons { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+    .cauldron {
+      margin: 0;
+      padding: 14px 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #e8dcc2;
+      text-align: center;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .cauldron:hover { transform: translateY(-4px); border-color: var(--gold); box-shadow: 0 10px 24px rgba(43,32,66,.12); }
+    .cauldron .cauldron-image { display: grid; place-items: center; aspect-ratio: 1 / 1; }
+    .cauldron img { max-height: 135px; object-fit: contain; }
+    .cauldron figcaption { margin-top: 8px; color: var(--plum); font-weight: 700; }
+    .cauldron-cost {
+      display: block;
+      margin-top: 5px;
+      color: #817b82;
+      font: italic 12px/1.3 Arial, sans-serif;
+    }
+
+    .ingredients { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .ingredient {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 28px, rgba(104,78,48,.035) 29px),
+        #e8dcc2;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(43,32,66,.07);
+    }
+    .ingredient h3 { margin: 0; padding: 18px 18px 0; font-size: 22px; text-align: center; }
+    .ingredient-head { display: block; }
+    .ingredient-image { display: grid; place-items: center; min-height: 205px; padding: 15px 24px; }
+    .ingredient-image img { max-height: 180px; object-fit: contain; transition: transform .22s ease; }
+    .ingredient:hover .ingredient-image img { transform: scale(1.04); }
+    .task {
+      display: block !important;
+      margin-top: auto;
+      padding: 17px 18px;
+      border-top: 1px solid var(--line);
+      background: var(--parchment);
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .task span { color: var(--violet); font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
+    .task a { color: var(--violet); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+    .task a:hover { color: var(--green); }
+
+    @media (min-width: 681px) {
+      .ingredients {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 12px;
+        align-items: stretch;
+        padding-top: 38px;
+      }
+      .ingredient {
+        position: relative;
+        min-height: 210px;
+        overflow: visible;
+        border: 0;
+        border-radius: 30px;
+        background: #d7cab1;
+        box-shadow: none;
+      }
+      .ingredient-head { display: contents; }
+      .ingredient h3 {
+        order: 1;
+        margin: 0;
+        padding: 70px 10px 5px;
+        color: #171318;
+        font: italic 700 16px/1.25 Arial, sans-serif;
+        text-align: center;
+      }
+      .ingredient-image {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        width: 100%;
+        min-height: 112px;
+        padding: 0 8px;
+        pointer-events: none;
+      }
+      .ingredient-image img {
+        width: 100%;
+        height: 112px;
+        max-height: none;
+        object-fit: contain;
+        filter: drop-shadow(0 7px 5px rgba(39,27,20,.18));
+      }
+      .ingredient .empty-mark { font-size: 48px; color: rgba(74,55,72,.22); }
+      .ingredient .task {
+        order: 2;
+        margin: 0;
+        padding: 7px 12px 18px;
+        border: 0;
+        color: #171318;
+        background: transparent;
+        font: italic 13px/1.35 Arial, sans-serif;
+        text-align: left;
+      }
+      .ingredient .task span,
+      .ingredient .task span + br { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .cauldrons { grid-template-columns: repeat(3, 1fr); }
+      .ingredients { grid-template-columns: repeat(4, 1fr); }
+      .mini-tasks { grid-template-columns: 1fr; }
+      .potions-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .potion-slot[open] { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 680px) {
+      .potion-page { width: 100%; margin: 0; padding: 26px 16px 40px; border-radius: 0; }
+      .potion-page::before, .potion-page::after { font-size: 52px; }
+      .tabs { margin-top: 0; padding: 6px; gap: 5px; border-radius: 13px; }
+      .tab-button { min-height: 42px; padding: 9px 4px; border-radius: 9px; font-size: 11px; }
+      .potion-card { grid-template-columns: 1fr; }
+      .potion-visual { min-height: 260px; }
+      .potion-visual img { max-height: 225px; }
+      .ingredients { grid-template-columns: 1fr; gap: 10px; }
+      .potions-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .potions-grid { padding-top: 22px; }
+      .potion-slot summary { min-height: 205px; padding: 0 10px 10px; }
+      .potion-slot summary img { width: 128px; height: 128px; margin-top: -24px; }
+      .empty-potion-content { min-height: 205px; padding: 10px; }
+      .ingredient { display: grid; grid-template-columns: 90px 1fr; grid-template-rows: auto 1fr; border-radius: 14px; }
+      .ingredient-head { display: contents; }
+      .ingredient h3 { grid-column: 2; grid-row: 1; text-align: left; padding: 12px 12px 0; font-size: 15px; }
+      .ingredient-image { grid-column: 1; grid-row: 1 / 3; min-height: 105px; padding: 9px; }
+      .ingredient-image img { max-height: 86px; }
+      .task { grid-column: 2; border-top: 0; background: transparent; padding: 5px 12px 12px; font-size: 12px; }
+    }
+
+    @media (max-width: 460px) {
+      .cauldrons { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .cauldron { padding: 10px 7px; border-radius: 14px; }
+      .cauldron figcaption { font-size: 14px; }
+      .ingredient { grid-template-columns: 82px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="potion-page">
+    <nav class="tabs" role="tablist" aria-label="Разделы практического зельеварения">
+      <button class="tab-button" type="button" role="tab" id="tab-potions" aria-controls="panel-potions" aria-selected="true" data-tab="panel-potions">Зелья</button>
+      <button class="tab-button" type="button" role="tab" id="tab-cauldrons" aria-controls="panel-cauldrons" aria-selected="false" data-tab="panel-cauldrons">Котлы</button>
+      <button class="tab-button" type="button" role="tab" id="tab-ingredients" aria-controls="panel-ingredients" aria-selected="false" data-tab="panel-ingredients">Ингредиенты</button>
+    </nav>
+
+    <section class="section tab-panel" id="panel-potions" role="tabpanel" aria-labelledby="tab-potions">
+      <div class="potion-tier">
+        <h2 class="potion-tier-title">Простые зелья</h2>
+        <div class="potions-grid" id="potions-simple">
+          <details class="potion-slot" id="fortifying-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t326875.png" alt="Укрепляющий раствор">
+              <span class="potion-number">5 ✦</span>
+              <span>Укрепляющий раствор</span>
+              <span class="potion-meta">Обычный котёл · Кровь саламандры · Порошок из когтя грифона</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="fortifying-code" readonly spellcheck="false" aria-label="Код Укрепляющего раствора"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="exploding-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t85916.png" alt="Взрывающее зелье">
+              <span class="potion-number">5 ✦</span>
+              <span>Взрывающее зелье</span>
+              <span class="potion-meta">Обычный котёл · Яйцо пеплозмея · Паучьи лапки</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="exploding-code" readonly spellcheck="false" aria-label="Код Взрывающего зелья"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="pepperup-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t285819.png" alt="Бодроперцовое зелье">
+              <span class="potion-number">5 ✦</span>
+              <span>Бодроперцовое зелье</span>
+              <span class="potion-meta">Обычный котёл · Корень мандрагоры · Кровь саламандры</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="pepperup-code" readonly spellcheck="false" aria-label="Код Бодроперцового зелья"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="maxima-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t53301.png" alt="Зелье Максима">
+              <span class="potion-number">5 ✦</span>
+              <span>Зелье Максима</span>
+              <span class="potion-meta">Обычный котёл · Сок пиявки · Порошок из когтя грифона</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="maxima-code" readonly spellcheck="false" aria-label="Код Зелья Максима"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="hair-growth-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t446857.png" alt="Зелье роста волос">
+              <span class="potion-number">5 ✦</span>
+              <span>Зелье роста волос</span>
+              <span class="potion-meta">Обычный котёл · Корень имбиря · Волос азиатского дракона</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="hair-growth-code" readonly spellcheck="false" aria-label="Код Зелья роста волос"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+          <details class="potion-slot" id="herbicide-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t596317.png" alt="Гербицидное зелье">
+              <span class="potion-number">5 ✦</span>
+              <span>Гербицидное зелье</span>
+              <span class="potion-meta">Обычный котёл · Слизь флоббер-червя · Сушёная крапива</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="herbicide-code" readonly spellcheck="false" aria-label="Код Гербицидного зелья"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+        </div>
+      </div>
+      <div class="potion-tier">
+        <h2 class="potion-tier-title">Средние зелья</h2>
+        <div class="potions-grid" id="potions-medium"></div>
+      </div>
+      <div class="potion-tier">
+        <h2 class="potion-tier-title">Сложные зелья</h2>
+        <div class="potions-grid" id="potions-complex">
+          <details class="potion-slot" id="polyjuice-card">
+            <summary>
+              <img src="https://upforme.ru/uploads/001c/7d/92/7/t252081.png" alt="Бутылочка Оборотного зелья">
+              <span class="potion-number">15 ✦</span>
+              <span>Оборотное зелье</span>
+            </summary>
+            <div class="code-panel">
+              <textarea id="polyjuice-code" readonly spellcheck="false" aria-label="Код Оборотного зелья"></textarea>
+              <button class="copy-button" type="button">Скопировать код</button>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tab-panel" id="panel-cauldrons" role="tabpanel" aria-labelledby="tab-cauldrons" hidden>
+      <div class="cauldrons">
+        <figure class="cauldron"><div class="cauldron-image"><img src="https://upforme.ru/uploads/001c/7d/92/7/t447158.png" alt="Обычный котёл"></div><figcaption>Обычный котёл<span class="cauldron-cost">1 пост</span></figcaption></figure>
+        <figure class="cauldron"><div class="cauldron-image"><img src="https://upforme.ru/uploads/001c/7d/92/7/t578903.png" alt="Золотой котёл"></div><figcaption>Золотой котёл<span class="cauldron-cost">3 поста</span></figcaption></figure>
+        <figure class="cauldron"><div class="cauldron-image"><img src="https://upforme.ru/uploads/001c/7d/92/7/t787119.png" alt="Серебряный котёл"></div><figcaption>Серебряный котёл<span class="cauldron-cost">3 поста</span></figcaption></figure>
+        <figure class="cauldron"><div class="cauldron-image"><img src="https://upforme.ru/uploads/001c/7d/92/7/t440363.png" alt="Оловянный котёл"></div><figcaption>Оловянный котёл<span class="cauldron-cost">2 поста</span></figcaption></figure>
+        <figure class="cauldron"><div class="cauldron-image"><img src="https://upforme.ru/uploads/001c/7d/92/7/t252904.png" alt="Бронзовый котёл"></div><figcaption>Бронзовый котёл<span class="cauldron-cost">2 поста</span></figcaption></figure>
+        <figure class="cauldron"><div class="cauldron-image"><img src="https://upforme.ru/uploads/001c/7d/92/7/t869886.png" alt="Медный котёл"></div><figcaption>Медный котёл<span class="cauldron-cost">2 поста</span></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="section tab-panel" id="panel-ingredients" role="tabpanel" aria-labelledby="tab-ingredients" hidden>
+      <div class="ingredients" id="ingredients-grid"></div>
+    </section>
+  </main>
+  <script>
+    const simplePotions = document.getElementById('potions-simple');
+    const mediumPotions = document.getElementById('potions-medium');
+    const complexPotions = document.getElementById('potions-complex');
+    const ingredientsGrid = document.getElementById('ingredients-grid');
+    const polyjuiceCode = document.getElementById('polyjuice-code');
+    const pepperupCode = document.getElementById('pepperup-code');
+    const fortifyingCode = document.getElementById('fortifying-code');
+    const fortifyingCard = document.getElementById('fortifying-card');
+    const explodingCode = document.getElementById('exploding-code');
+    const explodingCard = document.getElementById('exploding-card');
+    const pepperupCard = document.getElementById('pepperup-card');
+    const maximaCode = document.getElementById('maxima-code');
+    const maximaCard = document.getElementById('maxima-card');
+    const hairGrowthCode = document.getElementById('hair-growth-code');
+    const hairGrowthCard = document.getElementById('hair-growth-card');
+    const herbicideCode = document.getElementById('herbicide-code');
+    const herbicideCard = document.getElementById('herbicide-card');
+    const polyjuiceCard = document.getElementById('polyjuice-card');
+    const tabs = document.querySelector('.tabs');
+    const potionPage = document.querySelector('.potion-page');
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    const fortifyingCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0KPQutGA0LXQv9C70Y/RjtGJ0LjQuSDRgNCw0YHRgtCy0L7RgFsvYl0KW2ld0J3QsNC/0LjRgtC+0LosINGB0L/QvtGB0L7QsdGB0YLQstGD0Y7RidC40Lkg0LjRgdGG0LXQu9C10L3QuNGOINC90LXQt9C90LDRh9C40YLQtdC70YzQvdGL0YUg0YDQsNC90LXQvdC40LksIArQutCw0Log0YTQuNC30LjRh9C10YHQutC40YUsINGC0LDQuiDQuCDQv9C+0LvRg9GH0LXQvdC90YvRhSDQv9C+0LQg0LLQvtC30LTQtdC50YHRgtCy0LjQtdC8INC/0YDQvtC60LvRj9GC0LjQuS5bL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QyNjc4ODAucG5nWy9pbWddCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRggpbYl3QmtGA0L7QstGMINGB0LDQu9Cw0LzQsNC90LTRgNGLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0LTQsNGA0L7QuiAKW2Jd0J/QvtGA0L7RiNC+0Log0LjQtyDQutC+0LPRgtGPINCz0YDQuNGE0L7QvdCwOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDRgdGD0L/QtdGALdGB0L/QvtGB0L7QsdC90L7RgdGC0YxbL2FsaWduXQ==';
+    const explodingCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JLQt9GA0YvQstCw0Y7RidC10LUg0LfQtdC70YzQtVsvYl0KW2ld0JfQtdC70YzQtSDQstC30YDRi9Cy0LAgIOKAlCDQutCw0Log0YHQu9C10LTRg9C10YIg0LjQtyDQvdCw0LfQstCw0L3QuNGPLCDQt9C10LvRjNC1LCDRgdC/0L7RgdC+0LHQvdC+0LUg0LLQt9C+0YDQstCw0YLRjNGB0Y8uWy9pXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90OTAxMTc0LnBuZ1svaW1nXQpbYl3QntCx0YvRh9C90YvQuSDQutC+0YLRkdC7OlsvYl0gCltiXdCv0LnRhtC+INC/0LXQv9C70L7Qt9C80LXRjzogWy9iXQpbYl3Qn9Cw0YPRh9GM0Lgg0LvQsNC/0LrQuDogWy9iXVsvYWxpZ25d';
+    const pepperupCodeBase64 = 'W2FsaWduPWNlbnRlcl3QktCw0YDRjiBbYl0i0JHQvtC00YDQvtC/0LXRgNGG0L7QstC+0LUg0LfQtdC70YzQtSJbL2JdCltpXdCf0YDQvtGC0LjQstC+0L/RgNC+0YHRgtGD0LTQvdCw0Y8g0LzQuNC60YHRgtGD0YDQsC4g0KDQtdC30LrQviDRgdC+0LPRgNC10LLQsNGO0YnQtdC1INC30LXQu9GM0LUuINCY0LzQtdC10YIgCtC90LXQsdC+0LvRjNGI0L7QtSDQv9C+0LHQvtGH0L3QvtC1INC00LXQudGB0YLQstC40LU6INC40Lcg0L3QvtGB0LAg0Lgg0YPRiNC10Lkg0L/QsNGG0LjQtdC90YLQsCDRh9Cw0YHQsCDRgtGA0Lgg0LjQtNGR0YIg0LvRkdCz0LrQuNC5INC00YvQvC5bL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QxNTg3NDYucG5nWy9pbWddCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRggpbYl3QmtC+0YDQtdC90Ywg0LzQsNC90LTRgNCw0LPQvtGA0Ys6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINC80LXQvApbYl3QmtGA0L7QstGMINGB0LDQu9Cw0LzQsNC90LTRgNGLOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9C+0LTQsNGA0L7QulsvYWxpZ25d';
+    const maximaCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDQnNCw0LrRgdC40LzQsFsvYl0KW2ld0JfQtdC70YzQtSDQnNCw0LrRgdC40LzQsCAtICDQuNGB0L/QvtC70YzQt9GD0LXRgtGB0Y8g0LTQu9GPINGD0LLQtdC70LjRh9C10L3QuNGPINGD0YDQvtC90LAgCtC+0YIg0LfQsNC60LvQuNC90LDQvdC40Lkg0LLRi9C/0LjQstGI0LXQs9C+INC4INC00LXQudGB0YLQstGD0LXRgiDQsiDRgtC10YfQtdC90LjQuCDQvtCz0YDQsNC90LjRh9C10L3QvdC+0LPQviDQstGA0LXQvNC10L3QuC5bL2ldCltpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3QzODE4MjQucG5nWy9pbWddCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRggpbYl3QodC+0Log0L/QuNGP0LLQutC4OlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQv9GA0LjQt9C90LDQvdC40LUg0LIg0LvRjtCx0LLQuApbYl3Qn9C+0YDQvtGI0L7QuiDQuNC3INC60L7Qs9GC0Y8g0LPRgNC40YTQvtC90LA6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINGB0YPQv9C10YAt0YHQv9C+0YHQvtCx0L3QvtGB0YLRjFsvYWxpZ25d';
+    const hairGrowthCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JfQtdC70YzQtSDRgNC+0YHRgtCwINCy0L7Qu9C+0YFbL2JdIApbaV3Ql9C10LvRjNC1INC00LvRjyDQsdGL0YHRgtGA0L7Qs9C+INGA0L7RgdGC0LAg0LLQvtC70L7RgVsvaV0KW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDQ5MTQ3Mi5wbmdbL2ltZ10gCltiXdCe0LHRi9GH0L3Ri9C5INC60L7RgtGR0Ls6Wy9iXSDQv9C+0YHRgiAKW2Jd0JrQvtGA0LXQvdGMINC40LzQsdC40YDRjzpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0L/QtdGB0L3RjyAKW2Jd0JLQvtC70L7RgSDQsNC30LjQsNGC0YHQutC+0LPQviDQtNGA0LDQutC+0L3QsDpbL2JdINC/0L7RgdGCLCDQv9C+0YHRgiwg0YTQsNC60YJbL2FsaWduXQ==';
+    const herbicideCodeBase64 = 'W2FsaWduPWNlbnRlcl3QryDQstCw0YDRjjogW2Jd0JPQtdGA0LHQuNGG0LjQtNC90L7QtSDQt9C10LvRjNC1Wy9iXQpbaV3Ql9C10LvRjNC1LCDQutC+0YLQvtGA0L7QtSDRgdC/0L7RgdC+0LHQvdC+INGD0L3QuNGH0YLQvtC20LDRgtGMINC40LvQuCDQv9C+0LLRgNC10LbQtNCw0YLRjCDRgNCw0YHRgtC10L3QuNGPLiAK0JjQvNC10LXRgiDQvtGC0LLRgNCw0YLQuNGC0LXQu9GM0L3Ri9C5INCy0LrRg9GBLCDQvdC10L/RgNC40LPQvtC00L3QviDQtNC70Y8g0YPQv9C+0YLRgNC10LHQu9C10L3QuNGPINGH0LXQu9C+0LLQtdC60L7QvCwgCtGC0LDQuiDQutCw0Log0LzQvtC20LXRgiDRg9GF0YPQtNGI0LjRgtGMINC10LPQviDQt9C00L7RgNC+0LLRjNC1LgpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90NjI2ODUxLnBuZ1svaW1nXQpbYl3QntCx0YvRh9C90YvQuSDQutC+0YLRkdC7OlsvYl0g0L/QvtGB0YIKW2Jd0KHQu9C40LfRjCDRhNC70L7QsdCx0LXRgC3Rh9C10YDQstGPOlsvYl0g0L/QvtGB0YIsINC/0L7RgdGCLCDQk9C+0LHQu9C40L3RgdC60LjQuSDQtNC+0LwKW2Jd0KHRg9GI0LXQvdCw0Y8g0LrRgNCw0L/QuNCy0LA6Wy9iXSDQv9C+0YHRgiwg0L/QvtGB0YIsINGG0LjRhNGA0LAgWy9pXVsvYWxpZ25d';
+    const polyjuiceCodeBase64 = 'W3F1b3RlXQpbYWxpZ249Y2VudGVyXQpbaW1nXWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy90MjUyMDgxLnBuZ1svaW1nXVsvYWxpZ25dClthbGlnbj1jZW50ZXJdW2Jd0J7QsdC+0YDQvtGC0L3QvtC1INC30LXQu9GM0LVbL2JdWy9hbGlnbl0KW3RhYmxlIGxheW91dD1maXhlZCB3aWR0aD0xMDAlXQpbdHJdClt0ZF1bdXJsPWh0dHBzOi8vdXBmb3JtZS5ydS91cGxvYWRzLzAwMWMvN2QvOTIvNy84OTczNzkucG5nXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q4OTczNzkucG5nWy9pbWddWy91cmxdCtCf0L7RgdGCWy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q0NTU5MDEucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQv9C+0YHRggrQu9GO0LHQvtC/0YvRgtC90YvQuSDRhNCw0LrRgiDQv9GA0L4g0LfQvNC10LlbL3RkXQpbdGRdW2ltZ11odHRwczovL3VwZm9ybWUucnUvdXBsb2Fkcy8wMDFjLzdkLzkyLzcvdDM3OTU5Ny5wbmdbL2ltZ10K0L/QvtGB0YIK0LzQtdC8Wy90ZF0KW3RkXVtpbWddaHR0cHM6Ly91cGZvcm1lLnJ1L3VwbG9hZHMvMDAxYy83ZC85Mi83L3Q5MDc3ODAucG5nWy9pbWddCtC/0L7RgdGCIArQv9C+0YHRggrQsdGD0YLRi9C70L7Rh9C60LBbL3RkXQpbL3RyXQpbL3RhYmxlXVsvcXVvdGVd';
+    function decodePotionCode(value) {
+      return new TextDecoder().decode(
+        Uint8Array.from(atob(value), (character) => character.charCodeAt(0))
+      );
+    }
+    fortifyingCode.value = decodePotionCode(fortifyingCodeBase64);
+    explodingCode.value = decodePotionCode(explodingCodeBase64);
+    pepperupCode.value = decodePotionCode(pepperupCodeBase64);
+    maximaCode.value = decodePotionCode(maximaCodeBase64);
+    hairGrowthCode.value = decodePotionCode(hairGrowthCodeBase64);
+    herbicideCode.value = decodePotionCode(herbicideCodeBase64);
+    polyjuiceCode.value = decodePotionCode(polyjuiceCodeBase64);
+
+    function syncEmbedHeight() {
+      const desiredHeight = Math.ceil(potionPage.getBoundingClientRect().height + 8);
+      try {
+        if (window.frameElement) {
+          window.frameElement.style.height = `${desiredHeight}px`;
+          window.frameElement.setAttribute('height', String(desiredHeight));
+        }
+      } catch (error) {
+        /* Внешний форум может запрещать изменение iframe — тогда макет остаётся авто-высоты. */
+      }
+      window.parent.postMessage({ type: 'potion-layout-height', height: desiredHeight }, '*');
+    }
+
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach((item) => item.setAttribute('aria-selected', String(item === button)));
+        tabPanels.forEach((panel) => {
+          const isActive = panel.id === button.dataset.tab;
+          panel.hidden = !isActive;
+          panel.style.display = isActive ? 'block' : 'none';
+        });
+        requestAnimationFrame(() => {
+          tabs.scrollIntoView({ block: 'start' });
+          syncEmbedHeight();
+        });
+      });
+    });
+
+    function createNamedPotion(name, difficulty) {
+      const slot = document.createElement('div');
+      slot.className = 'potion-slot empty';
+      slot.innerHTML = `
+        <div role="group" aria-label="${name}">
+          <div class="empty-potion-content">
+            <span class="empty-mark">◇</span>
+            <span class="potion-number">${difficulty}</span>
+            <span>${name}</span>
+          </div>
+        </div>`;
+      return slot;
+    }
+
+    const simplePotionNames = [
+      'Укрепляющий раствор', 'Взрывающее зелье', 'Бодроперцовое зелье',
+      'Зелье Максима', 'Зелье роста волос', 'Гербицидное зелье',
+      'Раздувающий раствор', 'Простое противоядие', 'Забывчивое зелье',
+      'Зелье восстановления сил'
+    ];
+    const mediumPotionNames = [
+      'Амортенция', 'Зелье пробуждения', 'Зелье красоты',
+      'Зелье невидимости', 'Грозовой напиток', 'Зелье острого ума'
+    ];
+    const complexPotionNames = [
+      'Оборотное зелье', 'Старящее зелье', 'Феликс Фелицис',
+      'Напиток живой смерти', 'Противоядие от любовного зелья'
+    ];
+
+    simplePotions.replaceChildren();
+    simplePotionNames.forEach((name) => {
+      simplePotions.appendChild(name === 'Укрепляющий раствор'
+        ? fortifyingCard
+        : name === 'Взрывающее зелье'
+          ? explodingCard
+        : name === 'Бодроперцовое зелье'
+          ? pepperupCard
+          : name === 'Зелье Максима'
+            ? maximaCard
+          : name === 'Зелье роста волос'
+            ? hairGrowthCard
+          : name === 'Гербицидное зелье'
+            ? herbicideCard
+          : createNamedPotion(name, '5 ✦'));
+    });
+    mediumPotions.replaceChildren();
+    mediumPotionNames.forEach((name) => mediumPotions.appendChild(createNamedPotion(name, '9 ✦')));
+    complexPotions.replaceChildren();
+    complexPotionNames.forEach((name) => {
+      complexPotions.appendChild(name === 'Оборотное зелье'
+        ? polyjuiceCard
+        : createNamedPotion(name, '15 ✦'));
+    });
+
+    const ingredientNames = [
+      'Аконит', 'Безоар', 'Валериана', 'Водоросли', 'Волос азиатского дракона',
+      'Волос единорога', 'Глаза рыбы-собаки', 'Дремоносные бобы', 'Жало веретенницы',
+      'Желчь броненосца', 'Змеиные клыки', 'Корень асфоделя', 'Корень имбиря',
+      'Корень мандрагоры', 'Крапива', 'Кровь саламандры', 'Крылья феи', 'Лаванда', 'Лепестки розы',
+      'Лирный корень', 'Листья манжетки', 'Листья ясеница', 'Мёд ипопаточника',
+      'Ноготь мертвеца', 'Паучьи лапки', 'Песок из часов',
+      'Плод смоковницы', 'Порошок из когтя грифона', 'Рог двурога', 'Рябина',
+      'Слизь флоббер-червя', 'Сок пиявки', 'Спорыш', 'Толчёный скарабей',
+      'Шерсть единорога', 'Шкурка бумсланга', 'Шляпка прыгающей поганки',
+      'Ягоды омелы', 'Яйца пеплозмея'
+    ];
+    const ingredientImages = {
+      'Аконит': 'https://upforme.ru/uploads/001c/7d/92/7/t426245.png',
+      'Безоар': 'https://upforme.ru/uploads/001c/7d/92/7/t243678.png',
+      'Валериана': 'https://upforme.ru/uploads/001c/7d/92/7/t684808.png',
+      'Водоросли': 'https://upforme.ru/uploads/001c/7d/92/7/t379597.png',
+      'Волос азиатского дракона': 'https://upforme.ru/uploads/001c/7d/92/7/t54247.png',
+      'Волос единорога': 'https://upforme.ru/uploads/001c/7d/92/7/t412277.png',
+      'Глаза рыбы-собаки': 'https://upforme.ru/uploads/001c/7d/92/7/t330510.png',
+      'Дремоносные бобы': 'https://upforme.ru/uploads/001c/7d/92/7/t918593.png',
+      'Жало веретенницы': 'https://upforme.ru/uploads/001c/7d/92/7/t735208.png',
+      'Желчь броненосца': 'https://upforme.ru/uploads/001c/7d/92/7/t529561.png',
+      'Змеиные клыки': 'https://upforme.ru/uploads/001c/7d/92/7/t730291.png',
+      'Корень асфоделя': 'https://upforme.ru/uploads/001c/7d/92/7/t764573.png',
+      'Корень имбиря': 'https://upforme.ru/uploads/001c/7d/92/7/t706323.png',
+      'Корень мандрагоры': 'https://upforme.ru/uploads/001c/7d/92/7/t469171.png',
+      'Крапива': 'https://upforme.ru/uploads/001c/7d/92/7/t277779.png',
+      'Кровь саламандры': 'https://upforme.ru/uploads/001c/7d/92/7/t151529.png',
+      'Крылья феи': 'https://upforme.ru/uploads/001c/7d/92/7/t296888.png',
+      'Лаванда': 'https://upforme.ru/uploads/001c/7d/92/7/t55214.png',
+      'Лепестки розы': 'https://upforme.ru/uploads/001c/7d/92/7/t236132.png',
+      'Лирный корень': 'https://upforme.ru/uploads/001c/7d/92/7/t618150.png',
+      'Листья манжетки': 'https://upforme.ru/uploads/001c/7d/92/7/t46423.png',
+      'Листья ясеница': 'https://upforme.ru/uploads/001c/7d/92/7/t446285.png',
+      'Мёд ипопаточника': 'https://upforme.ru/uploads/001c/7d/92/7/t666385.png',
+      'Ноготь мертвеца': 'https://upforme.ru/uploads/001c/7d/92/7/t304495.png',
+      'Паучьи лапки': 'https://upforme.ru/uploads/001c/7d/92/7/t728310.png',
+      'Песок из часов': 'https://upforme.ru/uploads/001c/7d/92/7/t85654.png',
+      'Плод смоковницы': 'https://upforme.ru/uploads/001c/7d/92/7/t430564.png',
+      'Порошок из когтя грифона': 'https://upforme.ru/uploads/001c/7d/92/7/t875116.png',
+      'Рог двурога': 'https://upforme.ru/uploads/001c/7d/92/7/t962409.png',
+      'Рябина': 'https://upforme.ru/uploads/001c/7d/92/7/t167725.png',
+      'Слизь флоббер-червя': 'https://upforme.ru/uploads/001c/7d/92/7/t554147.png',
+      'Сок пиявки': 'https://upforme.ru/uploads/001c/7d/92/7/t780324.png',
+      'Спорыш': 'https://upforme.ru/uploads/001c/7d/92/7/t463548.png',
+      'Толчёный скарабей': 'https://upforme.ru/uploads/001c/7d/92/7/t579012.png',
+      'Шерсть единорога': 'https://upforme.ru/uploads/001c/7d/92/7/t547924.png',
+      'Шкурка бумсланга': 'https://upforme.ru/uploads/001c/7d/92/7/t487107.png',
+      'Шляпка прыгающей поганки': 'https://upforme.ru/uploads/001c/7d/92/7/t499202.png',
+      'Ягоды омелы': 'https://upforme.ru/uploads/001c/7d/92/7/t360232.png',
+      'Яйца пеплозмея': 'https://upforme.ru/uploads/001c/7d/92/7/t399054.png'
+    };
+    const ingredientTasks = {
+      'Аконит': 'Написать пост от маски',
+      'Безоар': 'Защитить кого-то в посте',
+      'Валериана': 'Выложить <a href="https://safespace.rusff.me/viewtopic.php?id=268" target="_blank" rel="noopener noreferrer">фото</a> природы из своей галереи',
+      'Водоросли': 'Собрать <a href="https://safespace.rusff.me/viewtopic.php?id=45" target="_blank" rel="noopener noreferrer">пазл</a>',
+      'Волос азиатского дракона': 'Принести <a href="https://safespace.rusff.me/viewtopic.php?id=1168" target="_blank" rel="noopener noreferrer">любопытный факт</a> об Азии',
+      'Волос единорога': 'Подарить <a href="https://safespace.rusff.me/viewtopic.php?id=22" target="_blank" rel="noopener noreferrer">подарок</a> из категории «Волшебные»',
+      'Глаза рыбы-собаки': 'Написать о животном, которое было или могло быть у вашего персонажа, в любой теме, включая посты',
+      'Дремоносные бобы': 'Рассказать о своём сне или о сне персонажа в любой теме, включая посты',
+      'Жало веретенницы': 'Написать двум соигрокам, что любишь в их постах больше всего, во флуде или мыслительной комнате',
+      'Желчь броненосца': 'Оставить осеннюю запись в <a href="https://safespace.rusff.me/viewtopic.php?id=913" target="_blank" rel="noopener noreferrer">Домовом чате Хогвартса</a>',
+      'Змеиные клыки': 'Подарить <a href="https://safespace.rusff.me/viewtopic.php?id=22" target="_blank" rel="noopener noreferrer">подарок</a> из категории «Тёмные искусства»',
+      'Корень асфоделя': 'Написать пост, который должен дольше всех',
+      'Корень имбиря': 'Выложить песню в <a href="https://safespace.rusff.me/viewtopic.php?id=93" target="_blank" rel="noopener noreferrer">плейлист</a>',
+      'Корень мандрагоры': 'Принести любимый <a href="https://safespace.rusff.me/viewtopic.php?id=64" target="_blank" rel="noopener noreferrer">мем</a>',
+      'Крапива': 'Оставить цифру в <a href="https://safespace.rusff.me/viewtopic.php?id=344" target="_blank" rel="noopener noreferrer">«Волшебниках против волшебниц»</a>',
+      'Кровь саламандры': 'Подарить сезонный <a href="https://safespace.rusff.me/viewtopic.php?id=22" target="_blank" rel="noopener noreferrer">подарок</a> соигроку',
+      'Крылья феи': 'Бросить в посте кубик, который на что-то повлияет',
+      'Лаванда': '<a href="https://safespace.rusff.me/viewtopic.php?id=442" target="_blank" rel="noopener noreferrer">Поблагодарить</a> соигрока',
+      'Лепестки розы': 'Подарить <a href="https://safespace.rusff.me/viewtopic.php?id=22" target="_blank" rel="noopener noreferrer">подарок</a> из категории «Романтические»',
+      'Лирный корень': 'Получить <a href="https://safespace.rusff.me/viewtopic.php?id=21" target="_blank" rel="noopener noreferrer">ачивку</a>',
+      'Листья манжетки': 'Написать заявку в <a href="https://safespace.rusff.me/viewtopic.php?id=5" target="_blank" rel="noopener noreferrer">Нужные</a>, <a href="https://safespace.rusff.me/viewtopic.php?id=17" target="_blank" rel="noopener noreferrer">Хотим видеть</a> или <a href="https://safespace.rusff.me/viewtopic.php?id=243" target="_blank" rel="noopener noreferrer">Гештальтошную</a>',
+      'Листья ясеница': 'Выложить в <a href="https://safespace.rusff.me/viewtopic.php?id=268" target="_blank" rel="noopener noreferrer">фотографии</a> фото осеннего (или не осеннего) листочка',
+      'Мёд ипопаточника': 'Выложить песню-ассоциацию на персонажа соигрока в <a href="https://safespace.rusff.me/viewtopic.php?id=93" target="_blank" rel="noopener noreferrer">плейлист</a>',
+      'Ноготь мертвеца': 'Написать о покойном предке персонажа в любой теме, включая посты',
+      'Паучьи лапки': '<a href="https://safespace.rusff.me/viewtopic.php?id=885" target="_blank" rel="noopener noreferrer">Выяснить</a> с кем-нибудь отношения',
+      'Песок из часов': 'Написать пост быстрее, чем за 24 часа',
+      'Плод смоковницы': 'Завести <a href="https://safespace.rusff.me/viewforum.php?id=25" target="_blank" rel="noopener noreferrer">дневник</a> или оставить запись в дневнике',
+      'Порошок из когтя грифона': 'Придумать <a href="https://safespace.rusff.me/viewtopic.php?id=1199" target="_blank" rel="noopener noreferrer">супер-способность</a>',
+      'Рог двурога': 'Написать три поста в один эпизод за неделю',
+      'Рябина': 'Прийти на <a href="https://safespace.rusff.me/viewtopic.php?id=412" target="_blank" rel="noopener noreferrer">киновечер</a> или провести его',
+      'Слизь флоббер-червя': 'Записаться в ставки недели в <a href="https://safespace.rusff.me/viewtopic.php?id=655" target="_blank" rel="noopener noreferrer">Гоблинском доме</a>',
+      'Сок пиявки': 'Признаться в любви кому-нибудь во флуде',
+      'Спорыш': 'Поспорить с кем-то в <a href="https://safespace.rusff.me/viewtopic.php?id=655" target="_blank" rel="noopener noreferrer">Гоблинском доме</a>',
+      'Толчёный скарабей': 'Принести цитату в тему <a href="https://safespace.rusff.me/viewtopic.php?id=1171" target="_blank" rel="noopener noreferrer">«Цитаты для главной»</a>',
+      'Шерсть единорога': 'Надеть новую аватарку хотя бы на сутки',
+      'Шкурка бумсланга': 'Написать <a href="https://safespace.rusff.me/viewtopic.php?id=418" target="_blank" rel="noopener noreferrer">игровое письмо</a>',
+      'Шляпка прыгающей поганки': 'Написать за день по одному посту двум разным соигрокам',
+      'Ягоды омелы': 'Поцеловаться с кем-то в <a href="https://safespace.rusff.me/viewtopic.php?id=862" target="_blank" rel="noopener noreferrer">бутылочке</a>',
+      'Яйца пеплозмея': 'Выложить <a href="https://safespace.rusff.me/viewtopic.php?id=113" target="_blank" rel="noopener noreferrer">цитату соигрока</a>'
+    };
+
+    ingredientNames.forEach((name) => {
+      const ingredient = document.createElement('article');
+      ingredient.className = 'ingredient';
+      const image = ingredientImages[name]
+        ? `<img src="${ingredientImages[name]}" alt="${name}">`
+        : '<span class="empty-mark">◇</span>';
+      const task = ingredientTasks[name] || 'Условие получения будет добавлено позже.';
+      ingredient.innerHTML = `
+        <div class="ingredient-head">
+          <h3>${name}</h3>
+          <div class="ingredient-image">${image}</div>
+        </div>
+        <div class="task"><span>Задание</span><br>${task}</div>`;
+      ingredientsGrid.appendChild(ingredient);
+    });
+
+    requestAnimationFrame(syncEmbedHeight);
+
+    document.querySelectorAll('.copy-button').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const textarea = button.previousElementSibling;
+        try {
+          await navigator.clipboard.writeText(textarea.value);
+        } catch (error) {
+          textarea.focus();
+          textarea.select();
+          document.execCommand('copy');
+        }
+        const oldLabel = button.textContent;
+        button.textContent = 'Код скопирован';
+        setTimeout(() => { button.textContent = oldLabel; }, 1600);
+      });
+    });
+  </script>
+</body>
+</html>
