@@ -306,6 +306,13 @@
     }
 
     .ingredients { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .ingredients-note {
+      max-width: 820px;
+      margin: 0 auto 22px;
+      color: #aaa1ad;
+      font: italic 12px/1.5 Arial, sans-serif;
+      text-align: center;
+    }
     .ingredient {
       display: flex;
       flex-direction: column;
@@ -724,6 +731,7 @@
     </section>
 
     <section class="section tab-panel" id="panel-ingredients" role="tabpanel" aria-labelledby="tab-ingredients" hidden>
+      <p class="ingredients-note">Стоимость 1 ингредиента — 2 поста. Чтобы его правильно приготовить, необходимо выполнить задание ингредиента. Для каждого зелья задание необходимо выполнять заново, даже если ингредиенты повторяются.</p>
       <div class="ingredients" id="ingredients-grid"></div>
     </section>
   </main>
